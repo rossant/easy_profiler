@@ -29,7 +29,7 @@ def profile(filename):
         prof_filename, filename))
     results = get_profile_results(prof_filename)
     filename_results = os.path.join(
-        dir, os.path.splitext(filename)[0] + '.profile.txt')
+        dir, os.path.splitext(os.path.basename(filename))[0] + '.profile.txt')
     with open(filename_results, 'w') as f:
         f.write(results)
 
