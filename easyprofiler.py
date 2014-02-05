@@ -34,11 +34,17 @@ def profile(filename):
         f.write(results)
 
 def profile_line(filename):
+    filename = os.path.abspath(filename)
     scriptdir = os.path.dirname(os.path.abspath(__file__))
     kernprof_path = os.path.join(scriptdir, 'kernprof.py')
     dir = create_profile_dir(filename)
+    dir = os.path.abspath(dir)
     filename_results = os.path.join(
-        dir, os.path.splitext(filename)[0] + '.profile_line.txt')
+        dir, os.path.splitext(os.path.basename(filename))[0] + '.profile_line.txt')
+    os.chdir(dir)
+    print dir
+    print filename
+    print filename_results
     results, _ = run_command("python {0:s} -l -v {1:s}".format(
         kernprof_path, filename))
     with open(filename_results, 'w') as f:
