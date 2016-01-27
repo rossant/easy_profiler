@@ -1,7 +1,7 @@
 import os
 import sys
 import subprocess
-from cStringIO import StringIO
+from io import StringIO
 import pstats
 import argparse
 
@@ -19,9 +19,9 @@ def get_profile_results(prof_filename):
         sort_stats("cumulative").print_stats()
 
     sys.stdout = old_stdout
-    
+
     return profile_results.getvalue()
-    
+
 def profile(filename):
     dir = create_profile_dir(filename)
     prof_filename = os.path.join(dir, 'profile_results')
@@ -46,7 +46,7 @@ def profile_line(filename):
         kernprof_path, filename))
     with open(filename_results, 'w') as f:
         f.write(results)
-        
+
 def create_profile_dir(filename):
     # Create .easyprofile directory.
     dir = os.path.dirname(filename)
@@ -54,23 +54,23 @@ def create_profile_dir(filename):
     if not os.path.exists(dir):
         os.mkdir(dir)
     return dir
-        
+
 def main():
     parser = argparse.ArgumentParser(
-        description="""Easy profiling. Pass the filename as argument, 
+        description="""Easy profiling. Pass the filename as argument,
         and optionally -l if you want line-by-line profiling.""")
     parser.add_argument('filename',)
     parser.add_argument('-l',
-        '--line-profiler', 
-        help='use a line-by-line profiler', 
+        '--line-profiler',
+        help='use a line-by-line profiler',
         action='store_true',)
     args = parser.parse_args()
-    
+
     if args.line_profiler:
         profile_line(args.filename)
     else:
         profile(args.filename)
-        
+
 if __name__ == '__main__':
     main()
-    
+
