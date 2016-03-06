@@ -41,11 +41,11 @@ def profile_line(filename):
     dir = os.path.abspath(dir)
     filename_results = os.path.join(
         dir, os.path.splitext(os.path.basename(filename))[0] + '.profile_line.txt')
-    os.chdir(dir)
+    # os.chdir(dir)
     results, _ = run_command("python {0:s} -l -v {1:s}".format(
         kernprof_path, filename))
-    with open(filename_results, 'w') as f:
-        f.write(results)
+    with open(filename_results, 'wb') as f:
+        f.write((results))
 
 def create_profile_dir(filename):
     # Create .easyprofile directory.
